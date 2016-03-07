@@ -1,0 +1,32 @@
+{
+  "name": "vigour-is",
+  "version": "1.0.0",
+  "description": "\"is\" api for observables (observes until a value fulfils conditions) build in promise support",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.3.1"
+  },
+  "devDependencies": {
+    "vigour-observable": "^2.0.0",
+    "tape": "4.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vigour-io/is.git"
+  },
+  "keywords": [
+    "observable",
+    "mem",
+    "vigour",
+    "base"
+  ],
+  "author": "jim de beer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vigour-io/is/issues"
+  },
+  "homepage": "https://github.com/vigour-io/is#readme"
+}
