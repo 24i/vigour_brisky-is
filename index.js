@@ -1,20 +1,19 @@
 'use strict'
-var Promise = require('bluebird')
+const Promise = require('bluebird')
 Promise.config({ cancellation: true })
 
 exports.define = {
   is (val, callback, stamp) {
-    var type = typeof val
-    var compare
-    var promise
-    var parsed = this.val
-    var _this = this
+    const type = typeof val
+    const parsed = this.val
+    const _this = this
+    var compare, promise
 
     if (type === 'function') {
       compare = val
     } else {
       compare = function (compare) {
-        return compare == val //eslint-disable-line
+        return compare == val // eslint-disable-line
       }
     }
 
@@ -22,14 +21,15 @@ exports.define = {
       let cancel = function () {
         promise.cancel()
       }
+      _this.on('removeEmitter', cancel)
       promise = new Promise(function (resolve, reject, onCancel) {
         onCancel(function () {
           _this.off('data', is)
-          _this.off('remove', cancel)
+          _this.off('removeEmitter', cancel)
         })
         // reject
         callback = function (data, stamp) {
-          _this.off('remove', cancel)
+          _this.off('removeEmitter', cancel)
           resolve(this, data, stamp)
         }
       })
