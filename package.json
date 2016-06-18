@@ -4,7 +4,12 @@
   "description": "\"is\" api for observables (observes until a value fulfils conditions) build-in promise support",
   "main": "index.js",
   "scripts": {
-    "test": "node test/index.js"
+    "start": "watchify-server test/index.js",
+    "test": "node test | tap-difflet && standard",
+    "watch": "nodemon test | tap-difflet",
+    "cover": "istanbul cover --report none --print detail test/index.js",
+    "docs": "node_modules/vigour-doc/bin/vdoc",
+    "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0) && standard"
   },
   "dependencies": {
     "bluebird": "^3.3.1"
