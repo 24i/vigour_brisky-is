@@ -1,5 +1,4 @@
 # is
-# brisky-core
 <!-- VDOC.badges travis; standard; npm; coveralls -->
 <!-- DON'T EDIT THIS SECTION (including comments), INSTEAD RE-RUN `vdoc` TO UPDATE -->
 [![Build Status](https://travis-ci.org/vigour-io/is.svg?branch=master)](https://travis-ci.org/vigour-io/is)
