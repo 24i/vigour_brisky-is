@@ -1,5 +1,6 @@
 'use strict'
 const Promise = require('bluebird')
+const vstamp = require('vigour-stamp')
 Promise.config({ cancellation: true })
 
 exports.define = {
@@ -29,7 +30,8 @@ exports.define = {
         })
         // reject
         callback = function (data, stamp) {
-          _this.off('removeEmitter', cancel)
+          vstamp.done(stamp, () => _this.off('data', is))
+          vstamp.done(stamp, () => _this.off('removeEmitter', cancel))
           resolve(this, data, stamp)
         }
       })
@@ -43,9 +45,9 @@ exports.define = {
       this.on('data', is)
     }
 
-    function is (data, event) {
+    function is (data, stamp) {
       if (compare.call(this, this.val, data, stamp)) {
-        _this.off('data', is)
+        vstamp.done(stamp, () => _this.off('data', is))
         callback.call(this, data, stamp)
       }
     }

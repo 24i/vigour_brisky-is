@@ -8,7 +8,7 @@
 
 <!-- VDOC END -->
 
-.is api for observables (observes until a value fulfils conditions) build-in promise support
+.is api for observables (observes until a value fulfils conditions)
 
 ```javascript
   // add a once listener
