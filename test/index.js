@@ -16,18 +16,6 @@ test('is - callback', (t) => {
   })
 })
 
-test('is - promise', (t) => {
-  t.plan(2)
-  const obs = new Observable({ inject: is })
-  obs.is('james').then(() => {
-    t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire')
-  })
-  obs.set('james')
-  obs.is((val) => val === 'james').then((obs, val, stamp) => {
-    t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
-  })
-})
-
 test('is - multiple lsiteners', (t) => {
   t.plan(1)
   const obs = new Observable({ inject: is })
@@ -39,4 +27,37 @@ test('is - multiple lsiteners', (t) => {
   })
   obs.on(b)
   obs.set('james')
+})
+
+test('is - promise', (t) => {
+  t.plan(2)
+  const obs = new Observable({ inject: is })
+  obs.is('james').then(() => {
+    t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire')
+  })
+  obs.set('james')
+  obs.is((val) => val === 'james').then((obs, val, stamp) => {
+    t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
+  })
+  obs.set('hello')
+})
+
+test('is - promise - cancel', (t) => {
+  const obs = new Observable({ inject: is })
+  const promise = obs.is('james')
+  obs.remove()
+  setTimeout(() => {
+    t.equal(promise._onCancelField, void 0, 'cancelled promise')
+    t.end()
+  })
+})
+
+test('is - promise - cancel on obs.remove()', (t) => {
+  const obs = new Observable({ inject: is })
+  const promise = obs.is('james')
+  promise.cancel()
+  setTimeout(() => {
+    t.same(obs.emitters.data.fn.keys(), [], 'removed listener on cancel')
+    t.end()
+  })
 })
