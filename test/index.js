@@ -59,5 +59,5 @@ test('is - promise - cancel on obs.remove()', (t) => {
   setTimeout(() => {
     t.same(obs.emitters.data.fn.keys(), [], 'removed listener on cancel')
     t.end()
-  })
+  }, 1000)
 })
