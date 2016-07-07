@@ -49,7 +49,7 @@ test('is - promise - cancel', (t) => {
   setTimeout(() => {
     t.equal(promise._onCancelField, void 0, 'cancelled promise')
     t.end()
-  })
+  }, 10)
 })
 
 test('is - promise - cancel on obs.remove()', (t) => {
