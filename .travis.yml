@@ -1,7 +1,5 @@
 # .travis.yml
 language: node_js
-before_install:
-  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
 node_js:
   - '5.11'
   - '6.2'
