@@ -4,11 +4,9 @@
   "description": "\"is\" api for observables (observes until a value fulfils conditions) build-in promise support",
   "main": "index.js",
   "scripts": {
-    "start": "watchify-server test/index.js",
     "test": "(ducktape; node test) | tap-difflet && standard",
     "watch": "nodemon test | tap-difflet",
     "cover": "istanbul cover --report none --print detail test/index.js",
-    "docs": "node_modules/vigour-doc/bin/vdoc",
     "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0) && standard"
   },
   "dependencies": {
@@ -28,7 +26,6 @@
     "standard": "^7.0.1",
     "tap-difflet": "0.4.0",
     "tape": "^4.4.0",
-    "vigour-doc": "^1.1.5",
     "vigour-state": "4.3.1",
     "watchify-server": "^1.0.2"
   },

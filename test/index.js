@@ -6,24 +6,28 @@ const is = require('../')
 const vstamp = require('vigour-stamp')
 
 test('is - callback', (t) => {
-  t.plan(2)
+  t.plan(3)
   const obs = new Observable({ inject: is })
   obs.is('james', (val, stamp) => {
     vstamp.done(stamp, () => t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire'))
   })
   obs.set('james')
-  obs.is((val) => val === 'james', () => {
+  obs.is((val, data, stamp, target) => {
+    t.same(target, obs, 'target argument')
+    return val === 'james'
+  }, () => {
     t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
   })
 })
 
 test('is - multiple listeners', (t) => {
-  t.plan(1)
+  t.plan(2)
   const obs = new Observable({ inject: is })
   const a = () => {}
   const b = () => {}
   obs.on(a)
-  obs.is('james', (val, stamp) => {
+  obs.is('james', (val, stamp, target) => {
+    t.same(target, obs, 'target argument')
     vstamp.done(stamp, () => t.same(obs.emitters.data.fn.keys(), [1, 3], 'removes listeners after fire'))
   })
   obs.on(b)
@@ -31,14 +35,15 @@ test('is - multiple listeners', (t) => {
 })
 
 test('is - promise', (t) => {
-  t.plan(2)
+  t.plan(3)
   const obs = new Observable({ inject: is })
   obs.is('james').then(() => {
     t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire')
   })
   obs.set('james')
-  obs.is((val) => val === 'james').then((obs, val, stamp) => {
-    t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
+  obs.is((val) => val === 'james').then((target, val, stamp) => {
+    t.same(target, obs, 'target argument')
+    t.same(target.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
   })
   obs.set('hello')
 })

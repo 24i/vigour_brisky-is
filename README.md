@@ -20,7 +20,7 @@
   obs.set('something')
 
   // fire immediatly
-  obs.is('something', () => {
+  obs.is('something', (data, stamp, target) => {
     console.log('fire!')
   })
 
@@ -28,4 +28,15 @@
   obs.is('something').then(() => {
     console.log('fire')
   })
+
+  // fire immmediatly, as a promise
+  obs.is('something').then((target, data, stamp) => {
+    console.log('fire', target, data, stamp)
+  })
+
+  // use a compare function
+  obs.is((val, data, stamp, target) => val === 'hello')
+    .then((target, data, stamp) => {
+      console.log('fire', target, data, stamp)
+    })
 ```
