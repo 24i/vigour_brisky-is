@@ -32,7 +32,7 @@ exports.define = {
         callback = function (data, stamp) {
           vstamp.done(stamp, () => _this.off('data', is))
           vstamp.done(stamp, () => _this.off('removeEmitter', cancel))
-          resolve(this, data, stamp, this)
+          resolve(this, data, stamp)
         }
       })
     }
