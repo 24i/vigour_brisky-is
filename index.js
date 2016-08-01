@@ -32,23 +32,23 @@ exports.define = {
         callback = function (data, stamp) {
           vstamp.done(stamp, () => _this.off('data', is))
           vstamp.done(stamp, () => _this.off('removeEmitter', cancel))
-          resolve(this, data, stamp)
+          resolve(this, data, stamp, this)
         }
       })
     }
 
-    if (compare.call(this, parsed, void 0, stamp)) {
+    if (compare.call(this, parsed, void 0, stamp, this)) {
       if (callback) {
-        callback.call(this, parsed, stamp)
+        callback.call(this, parsed, stamp, this)
       }
     } else {
       this.on('data', is)
     }
 
     function is (data, stamp) {
-      if (compare.call(this, this.val, data, stamp)) {
+      if (compare.call(this, this.val, data, stamp, this)) {
         vstamp.done(stamp, () => _this.off('data', is))
-        callback.call(this, data, stamp)
+        callback.call(this, data, stamp, this)
       }
     }
     return promise || this
