@@ -41,7 +41,6 @@
   ],
   "browserify": {
     "transform": [
-      "postcssify",
       [
         "babelify",
         {
