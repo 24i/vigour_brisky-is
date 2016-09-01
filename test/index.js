@@ -6,7 +6,7 @@ const is = require('../')
 const vstamp = require('vigour-stamp')
 
 test('is - callback', (t) => {
-  t.plan(3)
+  t.plan(4)
   const obs = new Observable({ inject: is })
   obs.is('james', (val, stamp) => {
     vstamp.done(stamp, () => t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire'))
@@ -18,6 +18,10 @@ test('is - callback', (t) => {
   }, () => {
     t.same(obs.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
   })
+  obs.is(null, () => {
+    t.ok(true, 'fires on remove')
+  })
+  obs.remove()
 })
 
 test('is - multiple listeners', (t) => {
@@ -46,26 +50,6 @@ test('is - promise', (t) => {
     t.same(target.emitters.data.fn.keys(), [], 'removes listeners after fire, fires with a function')
   })
   obs.set('hello')
-})
-
-test('is - promise - cancel', (t) => {
-  const obs = new Observable({ inject: is })
-  const promise = obs.is('james')
-  obs.remove()
-  setTimeout(() => {
-    t.equal(promise._onCancelField, void 0, 'cancelled promise')
-    t.end()
-  }, 1000)
-})
-
-test('is - promise - cancel on obs.remove()', (t) => {
-  const obs = new Observable({ inject: is })
-  const promise = obs.is('james')
-  promise.cancel()
-  setTimeout(() => {
-    t.same(obs.emitters.data.fn.keys(), [], 'removed listener on cancel')
-    t.end()
-  }, 1000)
 })
 
 test('is - multiple is listeners on observable', (t) => {
