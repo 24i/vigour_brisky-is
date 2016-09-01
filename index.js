@@ -5,7 +5,7 @@ exports.define = {
   is (val, callback, stamp) {
     const type = typeof val
     const parsed = this.val
-    const _this = this
+    var _this = this
     var compare, promise
     if (type === 'function') {
       compare = val
@@ -20,28 +20,28 @@ exports.define = {
       let cancel = function () {
         promise.cancel()
       }
-      _this.on('removeEmitter', cancel)
+      _this = _this.on('removeEmitter', cancel)
       promise = new Promise(function (resolve, reject) {
         callback = function (data, stamp) {
           vstamp.done(stamp, () => _this.off('data', is))
           vstamp.done(stamp, () => _this.off('removeEmitter', cancel))
-          resolve(this, data, stamp)
+          resolve(_this, data, stamp)
         }
       })
     }
-    if (compare.call(this, parsed, void 0, stamp, this)) {
+    if (compare.call(_this, parsed, void 0, stamp, _this)) {
       if (callback) {
-        callback.call(this, parsed, stamp, this)
+        callback.call(_this, parsed, stamp, _this)
       }
     } else {
-      this.on('data', is)
+      _this = _this.on('data', is)
     }
     function is (data, stamp) {
-      if (compare.call(this, this.val, data, stamp, this)) {
+      if (compare.call(_this, _this.val, data, stamp, _this)) {
         vstamp.done(stamp, () => _this.off('data', is))
-        callback.call(this, data, stamp, this)
+        callback.call(_this, data, stamp, _this)
       }
     }
-    return promise || this
+    return promise || _this
   }
 }
