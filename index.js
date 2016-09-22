@@ -39,6 +39,7 @@ exports.define = {
     }
     function is (data, stamp) {
       if (compare.call(_this, _this.val, data, stamp, _this)) {
+        console.log('id is: ', id)
         vstamp.done(stamp, () => _this.off('data', id === void 0 ? is : id))
         callback.call(_this, data, stamp, _this)
       }
