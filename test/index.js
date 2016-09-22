@@ -97,3 +97,24 @@ test('is - multiple is listeners on state', (t) => {
   }})
   t.equal(cnt, 2, 'is cb should be fired twice')
 })
+
+test('is - multiple listeners with id', (t) => {
+  t.plan(1)
+  const state = new State({
+    a: {}
+  })
+  let cnt = 0
+  state.get('a.b', {}).is((val) => typeof val === 'string', function () {
+    ++cnt
+  }, 'one')
+  state.get('a.b', {}).is((val) => typeof val === 'string', function () {
+    ++cnt
+  }, 'one')
+  state.get('a.b', {}).is((val) => typeof val === 'string', function () {
+    ++cnt
+  }, 'two')
+  state.set({a: {
+    b: 'is'
+  }})
+  t.equal(cnt, 2, 'is cb should be fired twice')
+})
