@@ -1,6 +1,6 @@
 {
   "name": "vigour-is",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "\"is\" api for observables (observes until a value fulfils conditions) build-in promise support",
   "main": "index.js",
   "scripts": {
