@@ -2,7 +2,7 @@
 const vstamp = require('vigour-stamp')
 
 exports.define = {
-  is (val, callback, id, stamp) {
+  is (val, callback, id, stamp, attach) {
     const type = typeof val
     const parsed = this.val
     var _this = this
@@ -29,11 +29,20 @@ exports.define = {
         callback.call(_this, parsed, stamp, _this)
       }
     } else {
-      _this = _this.on('data', is, id)
+      if (attach) {
+        attach = [ is, attach ]
+        _this = _this.on('data', attach, id)
+      } else {
+        _this = _this.on('data', is, id)
+      }
     }
     function is (data, stamp) {
       if (compare.call(_this, _this.val, data, stamp, _this)) {
-        vstamp.done(stamp, () => _this.off('data', id === void 0 ? is : id))
+        if (attach) {
+          vstamp.done(stamp, () => _this.off('data', attach))
+        } else {
+          vstamp.done(stamp, () => _this.off('data', id === void 0 ? is : id))
+        }
         callback.call(_this, data, stamp, _this)
       }
     }

@@ -38,17 +38,23 @@ test('is - context', (t) => {
 })
 
 test('is - context - attach', (t) => {
-  t.plan(1)
+  t.plan(3)
+  const client = new Observable()
   const obs = new Observable({
     field: {
       inject: is
     }
   })
   const instance = new obs.Constructor()
-  instance.field.is('james').then(() => {
+  instance.field.is('james', () => {
     t.ok(true, 'passes after resolve')
-  })
+  }, false, false, client)
   instance.field.set('james')
+  const attach = instance.field.emitters.data.attach
+  t.same(attach.keys(), [], 'removed attach listener')
+  instance.field.is('jurk', () => {}, false, false, client)
+  client.remove()
+  t.same(attach.keys(), [], 'removed attach listener on client remove')
 })
 
 test('is - multiple listeners', (t) => {
