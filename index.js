@@ -18,14 +18,9 @@ exports.define = {
     }
 
     if (!callback) {
-      let cancel = function () {
-        promise.cancel()
-      }
-      _this = _this.on('removeEmitter', cancel)
-      promise = new Promise(function (resolve, reject) {
+      promise = new Promise((resolve, reject) => {
         callback = function (data, stamp) {
           vstamp.done(stamp, () => _this.off('data', id === void 0 ? is : id))
-          vstamp.done(stamp, () => _this.off('removeEmitter', cancel))
           resolve(_this, data, stamp)
         }
       })
