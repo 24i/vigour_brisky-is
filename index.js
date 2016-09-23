@@ -16,7 +16,6 @@ exports.define = {
           : compare == val // eslint-disable-line
       }
     }
-
     if (!callback) {
       promise = new Promise((resolve, reject) => {
         callback = function (data, stamp) {

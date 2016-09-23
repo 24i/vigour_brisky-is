@@ -37,6 +37,20 @@ test('is - context', (t) => {
   instance.field.set('james')
 })
 
+test('is - context - attach', (t) => {
+  t.plan(1)
+  const obs = new Observable({
+    field: {
+      inject: is
+    }
+  })
+  const instance = new obs.Constructor()
+  instance.field.is('james').then(() => {
+    t.ok(true, 'passes after resolve')
+  })
+  instance.field.set('james')
+})
+
 test('is - multiple listeners', (t) => {
   t.plan(2)
   const obs = new Observable({ inject: is })
