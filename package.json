@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bubleify": "^0.5.1",
-    "promise-bluebird": "0.1.0",
+    "promise-bluebird": "0.2.1",
     "vigour-stamp": "^1.4.0"
   },
   "devDependencies": {
