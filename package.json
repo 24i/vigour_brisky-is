@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bubleify": "^0.5.1",
-    "promise-bluebird": "0.2.1",
+    "buble-promisify": "0.1.0",
     "vigour-stamp": "^1.4.0"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
   "browserify": {
     "transform": [
       "bubleify",
-      "promise-bluebird"
+      "buble-promisify"
     ]
   },
   "author": "jim de beer",
