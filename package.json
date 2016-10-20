@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bubleify": "^0.5.1",
-    "buble-promisify": "0.1.0",
+    "buble-promisify": "^1.0.0",
     "vigour-stamp": "^1.4.0"
   },
   "devDependencies": {
